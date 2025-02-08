@@ -1,19 +1,33 @@
-class Site {
-    constructor() {
-        this._controller = "https://localhost:7061" + "/api/";
-        this._urlGetWeatherForecast = this._controller + `weatherforecast`;
-    }
-    static Init() {
+﻿class Site {
+    //#region Urls
+
+    private readonly _controller = "https://localhost:7061" + "/api/";
+    private readonly _urlGetWeatherForecast: string = this._controller + `weatherforecast`;
+
+    //#endregion
+
+    public static Init(): void {
         new Site().Init();
     }
-    Init() {
+
+    private Init(): void {
         this.ServerRequest_SummariseText();
     }
-    Helpers_GetVerficationToken(formEl) {
-        const token = formEl.querySelector("input[name=__RequestVerificationToken]");
+
+
+    //#region Helpers
+
+    private Helpers_GetVerficationToken(formEl: HTMLFormElement): string {
+        const token = formEl.querySelector("input[name=__RequestVerificationToken]") as HTMLInputElement;
         return token ? token.value : "";
     }
-    async ServerRequest_SummariseText() {
+
+    //#endregion
+
+
+    //#region SummariseText
+
+    private async ServerRequest_SummariseText(): Promise<void> {
         await fetch(this._urlGetWeatherForecast, { method: 'GET' }).then(async (response) => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -27,8 +41,11 @@ class Site {
             console.error('There has been a problem with your fetch operation:', error);
         });
     }
-    ServerResponse_SummariseText(textSummaryData) {
+
+    private ServerResponse_SummariseText(textSummaryData: any): void {
         console.log(textSummaryData);
+
     }
+
+    //#endregion
 }
-//# sourceMappingURL=Site.js.map

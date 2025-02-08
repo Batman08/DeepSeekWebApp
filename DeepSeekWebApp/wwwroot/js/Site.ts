@@ -2,7 +2,7 @@
     //#region Urls
 
     private readonly _controller = "https://localhost:7061" + "/api/";
-    private readonly _urlGetWeatherForecast: string = this._controller + `weatherforecast`;
+    private readonly _urlSummariseText: string = this._controller + `textsummary`;
 
     //#endregion
 
@@ -28,7 +28,7 @@
     //#region SummariseText
 
     private async ServerRequest_SummariseText(): Promise<void> {
-        await fetch(this._urlGetWeatherForecast, { method: 'GET' }).then(async (response) => {
+        await fetch(this._urlSummariseText + "?text=this is a test", { method: 'GET' }).then(async (response) => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

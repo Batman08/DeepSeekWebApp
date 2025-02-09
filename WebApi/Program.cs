@@ -1,4 +1,12 @@
+using Microsoft.SemanticKernel;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Increase the HttpClient timeout globally
+//builder.Services.AddRequestTimeouts(options =>
+//{
+//    options.DefaultPolicy = new RequestTimeoutPolicy { Timeout = TimeSpan.FromMinutes(5) };
+//});
 
 // Add services to the container.
 AllowExternalApiRequests();
@@ -6,6 +14,9 @@ AllowExternalApiRequests();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddOllamaChatCompletion("deepseek-r1:latest", new Uri(uriString: "http://localhost:11434/"));
+//builder.Services.AddScoped<IChatCompletionService, OllamaChatCompletionService>();
 
 var app = builder.Build();
 
@@ -16,6 +27,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
+
+//app.UseRequestTimeouts();
 
 app.UseHttpsRedirection();
 
@@ -38,12 +51,4 @@ void AllowExternalApiRequests()
                 .AllowAnyHeader();
         });
     });
-
-    //builder.Services.AddCors(options =>
-    //{
-    //    options.AddPolicy("AllowAll", policy =>
-    //        policy.AllowAnyOrigin()       // Allow all origins (not recommended for production)
-    //              .AllowAnyMethod()       // Allow any HTTP method
-    //              .AllowAnyHeader());       // Allow any headers
-    //});
 }

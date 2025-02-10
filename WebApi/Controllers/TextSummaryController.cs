@@ -17,13 +17,20 @@ namespace WebApi.Controllers
             _chatCompletionService = chatCompletionService;
 
             _chatHistory = new ChatHistory();
-            _chatHistory.AddSystemMessage("You will summarise the following text given below and will not give any explanation for it, just the summary only.");
+            _chatHistory.AddSystemMessage("You will summarise any text given using no more than 200 words:");
+            //_chatHistory.AddSystemMessage("You will summarise any text given. Do not give any reasoning for it:");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(string text)
+        public IActionResult Get()
         {
-            if (string.IsNullOrWhiteSpace(text))
+            return Ok();
+        }
+
+        [HttpPost("summarise")]
+        public async Task<IActionResult> Summarise([FromBody] SummariseTextDTO textItem)
+        {
+            if (string.IsNullOrWhiteSpace(textItem.Text))
             {
                 return BadRequest("Text is required");
             }
@@ -31,12 +38,17 @@ namespace WebApi.Controllers
             {
                 var cancellationTokenSource = new CancellationTokenSource();
 
-                _chatHistory.AddUserMessage(text);
-                var response = await _chatCompletionService.GetChatMessageContentsAsync(text, cancellationToken: cancellationTokenSource.Token);
+                _chatHistory.AddUserMessage(textItem.Text);
+                var response = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory, cancellationToken: cancellationTokenSource.Token);
 
-                return Ok(new { Summary = $"{response[0].InnerContent}" });
-                //return Ok(new { Summary = $"Text received: {text}" });
+                return Ok(new { Summary = response[0] });
             }
         }
+    }
+
+
+    public class SummariseTextDTO
+    {
+        public string Text { get; set; } = "";
     }
 }

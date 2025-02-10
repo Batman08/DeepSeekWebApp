@@ -4,3 +4,12 @@ GET {{WebApi_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+POST {{WebApi_HostAddress}}/api/textsummary/summarise/
+Accept: application/json
+Content-Type: application/json
+{
+  "Text": "This is a test"
+}
+
+###

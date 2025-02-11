@@ -1,4 +1,4 @@
-﻿class Site {
+﻿class AiSummary {
     //#region Urls
 
     private readonly _controller = "https://localhost:7061" + "/api/";
@@ -6,22 +6,26 @@
 
     //#endregion
 
+
     //#region Controls
 
     private readonly _container = document.getElementById(`divContainer`) as HTMLDivElement;
-    private readonly inputTextArea = this._container.querySelector(`#inputTextArea`) as HTMLInputElement;
 
     //#endregion
 
 
+    //#region Init
+
+
     public static Init(): void {
-        new Site().Init();
+        new AiSummary().Init();
     }
 
     private Init(): void {
         this.BindEvents_AppendAiSummaryButton();
-        //this.inputTextArea.value = this.Helpers_Prompt();
     }
+
+    //#endregion
 
 
     //#region Helpers
@@ -31,10 +35,6 @@
 
         const token = formEl.querySelector("input[name=__RequestVerificationToken]") as HTMLInputElement;
         return token ? token.value : "";
-    }
-
-    private Helpers_Prompt(): string {
-        return `Up, up, and away! Paper airplanes are a fun, easy way to pass the time—but how exactly do you turn a basic piece of paper into a jet-setting masterpiece? You’ve come to the right place. We’ve put together a handy, step-by-step guide to help you fold your way to a sleek, far-flying paper airplane. IJust grab a piece of 8 ½ in (21.5 cm) by 11 in (28 cm) paper (or A4 size Printer or Copy paper) and get folding. In a matter of minutes, you’ll be ready for take-off!`;
     }
 
     //#endregion

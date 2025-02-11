@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel.ChatCompletion;
 
 
@@ -18,7 +19,6 @@ namespace WebApi.Controllers
 
             _chatHistory = new ChatHistory();
             _chatHistory.AddSystemMessage("You will summarise any text given using no more than 200 words:");
-            //_chatHistory.AddSystemMessage("You will summarise any text given. Do not give any reasoning for it:");
         }
 
         [HttpGet]
@@ -36,12 +36,20 @@ namespace WebApi.Controllers
             }
             else
             {
-                var cancellationTokenSource = new CancellationTokenSource();
-
                 _chatHistory.AddUserMessage(textItem.Text);
-                var response = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory, cancellationToken: cancellationTokenSource.Token);
+                var response = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
 
-                return Ok(new { Summary = response[0] });
+
+                /* Clean Response Text */
+                
+                // pattern to remove the <think></think> tags and content
+                string regexPattern = @"<think>.*?</think>";
+
+                // remove the <think> tags and the content inside them
+                string cleanedtextContent= Regex.Replace(response[0].Content ?? "", regexPattern, string.Empty, RegexOptions.Singleline);
+
+
+                return Ok(new { Summary = cleanedtextContent ?? null });
             }
         }
     }

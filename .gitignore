@@ -361,3 +361,15 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+#-------------------------------------------------------------------------------------
+
+
+# Configurations
+
+/DeepSeekWebApp/wwwroot/js/**/*.js
+/DeepSeekWebApp/wwwroot/js/**/*.js.map
+/DeepSeekWebApp/wwwroot/lib/*
+/DeepSeekWebApp/node_modules/
+/DeepSeekWebApp/package-lock.json

@@ -368,8 +368,8 @@ FodyWeavers.xsd
 
 # Configurations
 
-/DeepSeekWebApp/wwwroot/js/**/*.js
-/DeepSeekWebApp/wwwroot/js/**/*.js.map
-/DeepSeekWebApp/wwwroot/lib/*
-/DeepSeekWebApp/node_modules/
-/DeepSeekWebApp/package-lock.json
+/Web/wwwroot/js/**/*.js
+/Web/wwwroot/js/**/*.js.map
+/Web/wwwroot/lib/*
+/Web/node_modules/
+/Web/package-lock.json

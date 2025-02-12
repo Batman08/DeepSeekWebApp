@@ -1,4 +1,4 @@
-﻿namespace WebApi.DTO
+﻿namespace Api.DTO
 {
     public class TextItemDTO
     {

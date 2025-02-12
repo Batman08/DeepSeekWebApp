@@ -1,10 +1,5 @@
 @WebApi_HostAddress = http://localhost:5046
 
-GET {{WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
-
 POST {{WebApi_HostAddress}}/api/textsummary/summarise/
 Accept: application/json
 Content-Type: application/json

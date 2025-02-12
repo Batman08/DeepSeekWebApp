@@ -12,6 +12,9 @@ class AiSummary {
     //#region Controls
 
     private readonly _container = document.getElementById(`divContainer`) as HTMLDivElement;
+    private readonly divSummaryModal = document.getElementById(`summaryModal`) as HTMLDivElement;
+    private readonly summaryModal = new bootstrap.Modal(this.divSummaryModal);
+    private readonly divTextSummary = this.divSummaryModal.querySelector(`#divTextSummary`) as HTMLDivElement;
 
     //#endregion
 
@@ -91,6 +94,9 @@ class AiSummary {
 
     private ServerResponse_SummariseText(textSummaryData: any): void {
         console.log(textSummaryData);
+
+        this.divTextSummary.innerHTML = textSummaryData.summary;
+        this.summaryModal.show();
     }
 
     //#endregion

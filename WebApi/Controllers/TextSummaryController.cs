@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel.ChatCompletion;
+using WebApi.DTO;
 
 
 namespace WebApi.Controllers
@@ -8,7 +9,6 @@ namespace WebApi.Controllers
     [ApiController]
     public class TextSummaryController : ControllerBase
     {
-        //private readonly Kernel  _kernel;
         private readonly IChatCompletionService _chatCompletionService;
         private readonly ChatHistory _chatHistory;
 
@@ -18,7 +18,6 @@ namespace WebApi.Controllers
 
             _chatHistory = new ChatHistory();
             _chatHistory.AddSystemMessage("You will summarise any text given using no more than 200 words:");
-            //_chatHistory.AddSystemMessage("You will summarise any text given using no more than 200 words without explanation or reasoning:");
         }
 
         [HttpGet]
@@ -28,7 +27,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("summarise")]
-        public async Task<IActionResult> Summarise([FromBody] SummariseTextDTO textItem)
+        public async Task<IActionResult> Summarise([FromBody] TextItemDTO textItem)
         {
             if (string.IsNullOrWhiteSpace(textItem.Text))
             {
@@ -42,11 +41,5 @@ namespace WebApi.Controllers
                 return Ok(new { Summary = response[0].Content });
             }
         }
-    }
-
-
-    public class SummariseTextDTO
-    {
-        public string Text { get; set; } = "";
     }
 }

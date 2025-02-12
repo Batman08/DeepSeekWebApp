@@ -1,4 +1,6 @@
-﻿class AiSummary {
+﻿/// <reference types="./AiSummary" />
+
+class AiSummary {
     //#region Urls
 
     private readonly _controller = "https://localhost:7061" + "/api/";
@@ -43,7 +45,7 @@
     //#region DisplayAiSummaryButton
 
     private BindEvents_AppendAiSummaryButton(): void {
-        this._container.querySelectorAll(`[aiSummary]`).forEach((input: HTMLInputElement | HTMLTextAreaElement) => {
+        this._container.querySelectorAll(`[data-aiSummary]`).forEach((input: HTMLInputElement | HTMLTextAreaElement) => {
             this.DisplayAiSummaryButton(input);
         });
     }
@@ -63,20 +65,23 @@
     //#region SummariseText
 
     private async ServerRequest_SummariseText(ev: MouseEvent, inputText: string): Promise<void> {
+        const dataToServer: TextItemDTO = {
+            Text: inputText
+        };
+
         await fetch(this._urlSummariseText, {
             method: 'POST',
             headers: {
                 'XSRF-TOKEN': this.Helpers_GetVerficationToken(null),
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ Text: inputText })
+            body: JSON.stringify(dataToServer)
         }).then(async (response) => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             else {
                 var responseData = await response.json();
-                console.log(responseData);
                 this.ServerResponse_SummariseText(responseData);
             }
         }).catch(error => {

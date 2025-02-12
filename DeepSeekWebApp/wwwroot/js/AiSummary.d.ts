@@ -1,0 +1,3 @@
+﻿type TextItemDTO = {
+    Text: string;
+}

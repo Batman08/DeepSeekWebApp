@@ -1,4 +1,4 @@
-namespace DeepSeekWebApp.Models
+namespace Web.Models
 {
     public class ErrorViewModel
     {

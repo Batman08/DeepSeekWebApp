@@ -1,8 +1,8 @@
-using System.Diagnostics;
-using DeepSeekWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using Web.Models;
 
-namespace DeepSeekWebApp.Controllers
+namespace Web.Controllers
 {
     public class HomeController : Controller
     {

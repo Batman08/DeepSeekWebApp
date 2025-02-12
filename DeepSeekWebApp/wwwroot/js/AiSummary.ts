@@ -11,7 +11,6 @@ class AiSummary {
 
     //#region Controls
 
-    private readonly _container = document.getElementById(`divContainer`) as HTMLDivElement;
     private readonly divSummaryModal = document.getElementById(`summaryModal`) as HTMLDivElement;
     private readonly summaryModal = new bootstrap.Modal(this.divSummaryModal);
     private readonly divTextSummary = this.divSummaryModal.querySelector(`#divTextSummary`) as HTMLDivElement;
@@ -48,7 +47,7 @@ class AiSummary {
     //#region DisplayAiSummaryButton
 
     private BindEvents_AppendAiSummaryButton(): void {
-        this._container.querySelectorAll(`[data-aiSummary]`).forEach((input: HTMLInputElement | HTMLTextAreaElement) => {
+        document.querySelectorAll(`[data-aiSummary]`).forEach((input: HTMLInputElement | HTMLTextAreaElement) => {
             this.DisplayAiSummaryButton(input);
         });
     }

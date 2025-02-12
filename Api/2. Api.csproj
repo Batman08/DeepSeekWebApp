@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 	<NoWarn>SKEXP0070</NoWarn>
+	<RootNamespace>Api</RootNamespace>
+	<AssemblyName>Api</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

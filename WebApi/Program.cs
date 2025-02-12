@@ -15,7 +15,8 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddOllamaChatCompletion("deepseek-r1:latest", new Uri(uriString: "http://localhost:11434/"));
+//builder.Services.AddOllamaChatCompletion("deepseek-r1:latest", new Uri(uriString: "http://localhost:11434/"));
+builder.Services.AddOllamaChatCompletion("deepseek-llm:7b", new Uri(uriString: "http://localhost:11434/"));
 //builder.Services.AddScoped<IChatCompletionService, OllamaChatCompletionService>();
 
 var app = builder.Build();

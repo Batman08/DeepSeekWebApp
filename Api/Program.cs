@@ -8,7 +8,8 @@ AllowExternalRequests();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddOllamaChatCompletion("deepseek-llm:7b", new Uri(uriString: "http://localhost:11434/"));
+
+OllamaService();
 
 var app = builder.Build();
 
@@ -43,6 +44,15 @@ void AllowExternalRequests()
                 .AllowAnyHeader();
         });
     });
+}
+
+void OllamaService()
+{
+    var ollamaConfigSettings = builder.Configuration.GetSection("OllamaConfigSettings")!;
+    var model = ollamaConfigSettings["Model"] ?? "";
+    var endpoint = new Uri(uriString: ollamaConfigSettings["Endpoint"] ?? "");
+
+    builder.Services.AddOllamaChatCompletion(model, endpoint);
 }
 
 #endregion

@@ -20,34 +20,43 @@ class AiSummary {
 
     //#region Init
 
-
     public static Init(): void {
         new AiSummary().Init();
     }
 
     private Init(): void {
-        this.BindEvents_AppendAiSummaryButton();
+        this.DisplaySummaryButtons();
     }
 
     //#endregion
 
 
-    //#region DisplayAiSummaryButton
+    //#region DisplaySummaryButtons
 
-    private BindEvents_AppendAiSummaryButton(): void {
+    private DisplaySummaryButtons(): void {
         document.querySelectorAll(`[data-aiSummary]`).forEach((input: HTMLInputElement | HTMLTextAreaElement) => {
-            this.DisplayAiSummaryButton(input);
+            this.CreateSummaryButton(input);
         });
     }
 
-    private DisplayAiSummaryButton(input: HTMLInputElement | HTMLTextAreaElement): void {
-        const icon = document.createElement(`span`) as HTMLElement;
-        icon.innerHTML = `<i class="fa-solid fa-comment-nodes"></i>`;
-        icon.onclick = (ev: MouseEvent) => this.ServerRequest_SummariseText(ev, input.value);
+    private CreateSummaryButton(input: HTMLInputElement | HTMLTextAreaElement): void {
+        const button = document.createElement(`button`) as HTMLButtonElement;
+        button.type = `button`;
+        button.classList.add(`btn`, `btn-outline-primary`, `btn-sm`, `mt-2`);
+        button.innerHTML = `<i class="fa-solid fa-comment-nodes"></i> Summarise`;
+        button.onclick = (ev: MouseEvent) => this.ServerRequest_SummariseText(ev, input.value);
 
-        //append icon before input
-        input.insertAdjacentElement(`beforebegin`, icon);
+        input.insertAdjacentElement(`afterend`, button);
     }
+
+    //private DisplayAiSummaryButton(input: HTMLInputElement | HTMLTextAreaElement): void {
+    //    const icon = document.createElement(`span`) as HTMLElement;
+    //    icon.innerHTML = `<i class="fa-solid fa-comment-nodes"></i>`;
+    //    icon.onclick = (ev: MouseEvent) => this.ServerRequest_SummariseText(ev, input.value);
+
+    //    //append icon before input
+    //    input.insertAdjacentElement(`beforebegin`, icon);
+    //}
 
     ///#endregion
 
@@ -78,7 +87,7 @@ class AiSummary {
         });
     }
 
-    private ServerResponse_SummariseText(textSummaryData: any): void {
+    private ServerResponse_SummariseText(textSummaryData: SummaryResponseDTO): void {
         console.log(textSummaryData);
 
         this.divTextSummary.innerHTML = textSummaryData.summary;

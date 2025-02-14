@@ -32,18 +32,6 @@ class AiSummary {
     //#endregion
 
 
-    //#region Helpers
-
-    private Helpers_GetVerficationToken(formEl: HTMLFormElement | null): string {
-        if (!formEl) return "";
-
-        const token = formEl.querySelector("input[name=__RequestVerificationToken]") as HTMLInputElement;
-        return token ? token.value : "";
-    }
-
-    //#endregion
-
-
     //#region DisplayAiSummaryButton
 
     private BindEvents_AppendAiSummaryButton(): void {
@@ -67,24 +55,23 @@ class AiSummary {
     //#region SummariseText
 
     private async ServerRequest_SummariseText(ev: MouseEvent, inputText: string): Promise<void> {
-        const dataToServer: TextItemDTO = {
-            Text: inputText
-        };
+        const token = document.querySelector("input[name=__RequestVerificationToken]") as HTMLInputElement;
+        const dataToServer: TextItemDTO = { Text: inputText };
 
         await fetch(this._urlSummariseText, {
             method: 'POST',
             headers: {
-                'XSRF-TOKEN': this.Helpers_GetVerficationToken(null),
+                'XSRF-TOKEN': token ? token.value : "",
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(dataToServer)
         }).then(async (response) => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            else {
+            if (response.ok) {
                 var responseData = await response.json();
                 this.ServerResponse_SummariseText(responseData);
+            }
+            else {
+                throw new Error(`Server error: ${response.status}`);
             }
         }).catch(error => {
             console.error('There has been a problem with your fetch operation:', error);

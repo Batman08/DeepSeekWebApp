@@ -1,5 +1,6 @@
 ﻿using Api.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 
 
@@ -10,14 +11,10 @@ namespace Api.Controllers
     public class TextSummaryController : ControllerBase
     {
         private readonly IChatCompletionService _chatCompletionService;
-        private readonly ChatHistory _chatHistory;
 
         public TextSummaryController(IChatCompletionService chatCompletionService)
         {
             _chatCompletionService = chatCompletionService;
-
-            _chatHistory = new ChatHistory();
-            _chatHistory.AddSystemMessage("You will summarise any text given using no more than 200 words:");
         }
 
         [HttpGet]
@@ -29,17 +26,17 @@ namespace Api.Controllers
         [HttpPost("summarise")]
         public async Task<IActionResult> Summarise([FromBody] TextItemDTO textItem)
         {
-            if (string.IsNullOrWhiteSpace(textItem.Text))
-            {
-                return BadRequest("Text is required");
-            }
-            else
-            {
-                _chatHistory.AddUserMessage(textItem.Text);
-                var response = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
+            if (string.IsNullOrWhiteSpace(textItem.Text)) return BadRequest("Text is required");
 
-                return Ok(new { Summary = response[0].Content });
-            }
+
+            var chatHistory = new ChatHistory
+            {
+                new ChatMessageContent { Role = AuthorRole.System, Content = "Summarise any text given using no more than 200 words." },
+                new ChatMessageContent { Role = AuthorRole.User, Content = textItem.Text }
+            };
+            var response = await _chatCompletionService.GetChatMessageContentsAsync(chatHistory);
+
+            return Ok(new { Summary = response[0].Content });
         }
     }
 }

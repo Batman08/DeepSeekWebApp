@@ -11,8 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1" />
-    <PackageReference Include="Microsoft.KernelMemory.AI.Ollama" Version="0.96.250120.1" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="1.36.1" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.37.0" />
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.36.1-alpha" />
   </ItemGroup>
 

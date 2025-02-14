@@ -49,15 +49,6 @@ class AiSummary {
         input.insertAdjacentElement(`afterend`, button);
     }
 
-    //private DisplayAiSummaryButton(input: HTMLInputElement | HTMLTextAreaElement): void {
-    //    const icon = document.createElement(`span`) as HTMLElement;
-    //    icon.innerHTML = `<i class="fa-solid fa-comment-nodes"></i>`;
-    //    icon.onclick = (ev: MouseEvent) => this.ServerRequest_SummariseText(ev, input.value);
-
-    //    //append icon before input
-    //    input.insertAdjacentElement(`beforebegin`, icon);
-    //}
-
     ///#endregion
 
 

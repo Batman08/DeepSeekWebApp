@@ -49,7 +49,7 @@ void AllowExternalRequests()
 void OllamaService()
 {
     var ollamaConfigSettings = builder.Configuration.GetSection("OllamaConfigSettings")!;
-    var model = ollamaConfigSettings["Model"] ?? "";
+    var model = ollamaConfigSettings["Model"] ?? ""; //change model appsettings depending on deepseek model size
     var endpoint = new Uri(uriString: ollamaConfigSettings["Endpoint"] ?? "");
 
     builder.Services.AddOllamaChatCompletion(model, endpoint);

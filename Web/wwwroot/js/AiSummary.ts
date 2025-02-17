@@ -35,18 +35,19 @@ class AiSummary {
 
     private DisplaySummaryButtons(): void {
         document.querySelectorAll(`[data-aiSummary]`).forEach((input: HTMLInputElement | HTMLTextAreaElement) => {
-            this.CreateSummaryButton(input);
+            const summaryButton: HTMLButtonElement = this.CreateSummaryButton(input);
+            input.insertAdjacentElement(`afterend`, summaryButton);
         });
     }
 
-    private CreateSummaryButton(input: HTMLInputElement | HTMLTextAreaElement): void {
+    private CreateSummaryButton(input: HTMLInputElement | HTMLTextAreaElement): HTMLButtonElement {
         const button = document.createElement(`button`) as HTMLButtonElement;
         button.type = `button`;
         button.classList.add(`btn`, `btn-outline-primary`, `btn-sm`, `mt-2`);
         button.innerHTML = `<i class="fa-solid fa-comment-nodes"></i> Summarise`;
         button.onclick = (ev: MouseEvent) => this.ServerRequest_SummariseText(ev, input.value);
 
-        input.insertAdjacentElement(`afterend`, button);
+        return button;
     }
 
     ///#endregion
